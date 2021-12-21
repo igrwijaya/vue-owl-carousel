@@ -3,7 +3,7 @@
     <span v-show="showPrev" :id="prevHandler">
       <slot name="prev" />
     </span>
-    <div :id="elementHandle" :class="['owl-carousel', 'owl-theme']">
+    <div :id="elementHandle" :class="['owl-carousel', 'owl-theme', containerClass]">
       <slot />
     </div>
     <span v-show="showNext" :id="nextHandler">
@@ -166,8 +166,8 @@ export default {
       default: 200,
     },
     responsiveBaseElement: {
-        type: String,
-        "default": "window"
+      'type': String,
+      'default': 'window',
     },
     video: {
       type: Boolean,
@@ -216,6 +216,10 @@ export default {
     checkVisible: {
       type: Boolean,
       default: true,
+    },
+    containerClass: {
+      type: [String],
+      default: '',
     },
   },
   data: function() {
@@ -314,6 +318,29 @@ export default {
           }
         }
       });
+    }
+
+    if ( owl.hasClass('carousel-center-active-item') ) {
+      const itemsActive = owl.find('.owl-item.active');
+      const indexCenter = Math.floor( (owl.find('.owl-item.active').length - 1) / 2 );
+      const itemCenter = itemsActive.eq(indexCenter);
+
+      itemCenter.addClass('current');
+
+      owl.on('change.owl.carousel', function(event) {
+        owl.find('.owl-item').removeClass('current');
+
+        setTimeout(function() {
+          const itemsActive = owl.find('.owl-item.active');
+          const indexCenter = Math.floor( (owl.find('.owl-item.active').length - 1) / 2 );
+          const itemCenter = itemsActive.eq(indexCenter);
+
+          itemCenter.addClass('current');
+        }, 100);
+      });
+
+      // Refresh
+      owl.trigger('refresh.owl.carousel');
     }
   },
 

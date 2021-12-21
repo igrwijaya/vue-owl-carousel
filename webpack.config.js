@@ -47,8 +47,8 @@ const config = {
       },
     }),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
+      '$': 'jquery',
+      'jQuery': 'jquery',
       'window.jQuery': 'jquery',
     }),
   ],
@@ -68,7 +68,7 @@ module.exports = [
     output: {
       filename: 'vue-owl-carousel.js',
       libraryTarget: 'umd',
-      library: 'vue-owl-carousel',
+      library: 'nuxt-owl-carousel',
       umdNamedDefine: true,
     },
   }),
